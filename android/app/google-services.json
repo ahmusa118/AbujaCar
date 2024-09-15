@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "570043962791",
+    "project_id": "abujacar-2b452",
+    "storage_bucket": "abujacar-2b452.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570043962791:android:d2fd55e64cf4230c831282",
+        "android_client_info": {
+          "package_name": "com.abujacar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570043962791-6c9osqep5qj6l45599a2rjcqkvc3cto7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abujacar",
+            "certificate_hash": "f449d4d20789b557a1e15da74ed5a24edae6ef80"
+          }
+        },
+        {
+          "client_id": "570043962791-5gifrn2k8im9rab0fvoo7k3jv4aig7g6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd669bTPPwjLro-_bQxmEPAoYIqdN1-PI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570043962791-5gifrn2k8im9rab0fvoo7k3jv4aig7g6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "570043962791-chqu4g4vn6libk9evlsmtpl18rlrvb2h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.abujacar"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

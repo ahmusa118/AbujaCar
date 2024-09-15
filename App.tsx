@@ -5,114 +5,139 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import React,{useEffect} from 'react';
+import messaging from '@react-native-firebase/messaging';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import Splash from './src/components/packages/Splash';
+import SellerLogin from './src/components/packages/SellerLogin'
+import Unlogin from './src/components/packages/Unlogin';
+import Searchresult from './src/components/packages/Searchresult'
+import DeepLinkHandler from './src/components/packages/DeepLinkHandler'
+import Verifyme from './src/components/packages/Verifyme'
+import Signup from './src/components/packages/Signup'
+import SellLogin from './src/components/packages/SellLogin';
+import Forgotpassword from './src/components/packages/Forgotpassword'
+import Settings from './src/components/packages/Settings'
+import Saved from './src/components/packages/Saved';
+import Login from './src/components/packages/Login'
+import Logo from './src/components/packages/LogoTitle';
+import { useSnapshot } from 'valtio';
+import {state} from './src/components/state/store'
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+  const Stack = createNativeStackNavigator();
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+const config={
+  screens:{
+    Root:"Root",
+    Deeplinkhandler:{
+      path: 'buy/:id',
+      parse: {
+        id: (id) => `${id}`,
+      }
+    }
+  }
+}
+ //abujacar://app/user/80ee42af
+ messaging().setBackgroundMessageHandler(async remoteMessage=>{
+  console.log('Message handled in the background!', remoteMessage);
+ })
+ async function requestUserPermission() {
+  const authorizationStatus = await messaging().requestPermission();
+
+  if (authorizationStatus) {
+    console.log('Permission status:', authorizationStatus);
+  }
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+function App(){
+  useEffect(()=>{
+    const setup=async()=>{
+      requestUserPermission()
+      const token = await messaging().getToken()
+      console.log('token is '+ token )
+    }
+    setup()
+  },[])
+  const snapshot = useSnapshot(state);
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+  return (  <NavigationContainer
+  linking={{
+    prefixes:["https://abujacar.org","abujacar.org/"],
+    config
+  }}
+  
+  >
+    <Stack.Navigator initialRouteName="Splash" screenOptions={{
+headerStyle: {
+backgroundColor: `${snapshot.headcolor}`, // Set the header background color
+},
+
+headerTintColor: '#ccc', // Set the header text and icons color to white
+headerTitleStyle: {
+fontWeight: 'bold',
+},
+}}>
+     <Stack.Screen name="Splash" options={{headerShown:false}} component={Splash} />
+<Stack.Screen name="Signin" component={Unlogin} 
+ options={{ 
+  headerLeft: () => <Logo />,
+  headerTitle: 'AbujaCar', // Optional: Center align the logo
+  headerTitleStyle: {
+    color: snapshot.text, // Replace with your color code or variable
+  }
+}}
+/>
+<Stack.Screen name="Root" component={SellerLogin} 
+ options={{ 
+  headerTitle: () => <Logo />,
+  headerTitleAlign: '', // Optional: Center align the logo
+}}
+/>
+<Stack.Screen name="Searchresult" component={Searchresult} 
+ options={{ 
+  headerTitle: () => <Logo />,
+  headerTitleAlign: 'center', // Optional: Center align the logo
+}}
+/>
+<Stack.Screen name="Deeplinkhandler" component={DeepLinkHandler}
+ options={{ 
+  headerTitle: () => <Logo />,
+  headerTitleAlign: 'center', // Optional: Center align the logo
+}}
+/>
+<Stack.Screen name="verify" component={Verifyme} 
+ options={{ 
+  headerTitle: () => <Logo />,
+  headerTitleAlign: 'center', // Optional: Center align the logo
+}}
+/>
+<Stack.Screen name="signup" component={Signup}
+ options={{ 
+  headerTitle: () => <Logo />,
+  headerTitleAlign: 'center', // Optional: Center align the logo
+}}
+/>
+<Stack.Screen name="Selllogin" component={SellLogin} 
+ options={{ 
+  headerTitle: () => <Logo />,
+  headerTitleAlign: 'center', // Optional: Center align the logo
+}}
+/>
+<Stack.Screen name="Forgotpassword" component={Forgotpassword} 
+ options={{ 
+  headerTitle: () => <Logo />,
+  headerTitleAlign: 'center', // Optional: Center align the logo
+}}
+/>
+<Stack.Screen name="Settings" component={Settings} />
+<Stack.Screen name="saved" component={Saved} />
+<Stack.Screen name="login" component={Login} />
+</Stack.Navigator>
+  </NavigationContainer>)
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
 export default App;
+

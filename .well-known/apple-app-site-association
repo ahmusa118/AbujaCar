@@ -1,0 +1,26 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appIDs": [
+                    "AD7TGJ884A.org.reactjs.native.example.abujacar"
+                ],
+                "paths": [
+                    "*"
+                ],
+                "components": [
+                    {
+                        "/": "/buy/*",
+                        "comment": "Matches any URL with a path that starts with /buy/."
+                     }
+                ]
+            }
+        ]
+    },
+    "webcredentials": {
+        "apps": [
+            "AD7TGJ884A.org.reactjs.native.example.abujacar"
+        ]
+    }
+}
